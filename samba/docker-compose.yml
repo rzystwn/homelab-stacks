@@ -1,0 +1,28 @@
+services:
+  samba:
+    image: dperson/samba:latest
+    container_name: samba
+    restart: unless-stopped
+    mem_limit: 2g
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    environment:
+      TZ: "Asia/Jakarta"
+      USERID: "1000"
+      GROUPID: "1000"
+      VETO: "no"
+      SHARE_1: "nas;/mount;yes;no;yes"
+      SHARE_2: "nvme;/mount_nvme;yes;no;yes"
+      GLOBAL_1: "socket options = TCP_NODELAY SO_KEEPALIVE TCP_KEEPIDLE=30 TCP_KEEPCNT=3 TCP_KEEPINTVL=3"
+      GLOBAL_2: "deadtime = 15"
+      GLOBAL_3: "acl allow execute always = yes"
+    volumes:
+      - /mnt/data:/mount:rw
+      - /mnt/nvme-data:/mount_nvme:rw
+    ports:
+      - "139:139"
+      - "445:445"
+      - "137:137/udp"
+      - "138:138/udp"

@@ -1,0 +1,40 @@
+services:
+  aria2:
+    image: p3terx/aria2-pro
+    container_name: aria2
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - RPC_PORT=6800
+      - LISTEN_PORT=6888
+    volumes:
+      - /opt/stacks/downloader/aria2-config:/config
+      - /mnt/data/Downloads:/downloads
+    ports:
+      - "6800:6800"
+      - "6888:6888"
+      - "6888:6888/udp"
+
+  ariang:
+    image: p3terx/ariang
+    container_name: ariang
+    restart: unless-stopped
+    ports:
+      - "6880:6880"
+    depends_on:
+      - aria2
+
+  metube:
+    image: ghcr.io/alexta69/metube:latest
+    container_name: metube
+    restart: unless-stopped
+    environment:
+      - UID=1000
+      - GID=1000
+      - DOWNLOAD_DIR=/downloads
+      - STATE_DIR=/downloads/.metube
+    volumes:
+      - /mnt/data/Downloads:/downloads
+    ports:
+      - "8085:8081"

@@ -1,0 +1,21 @@
+services:
+  waha:
+    image: devlikeapro/waha
+    container_name: waha
+    restart: unless-stopped
+    ports:
+      - "3008:3000"
+    environment:
+      - WAHA_API_KEY=itskazor_waha_secret
+      - WAHA_DASHBOARD_ENABLED=true
+      - WAHA_DASHBOARD_USERNAME=admin
+      - WAHA_DASHBOARD_PASSWORD=itskazor
+      - WHATSAPP_SWAGGER_USERNAME=admin
+      - WHATSAPP_SWAGGER_PASSWORD=itskazor
+      - WAHA_PRINT_QR=true
+      - WAHA_LOG_LEVEL=info
+      - WHATSAPP_DEFAULT_ENGINE=NOWEB
+      - WHATSAPP_HOOK_URL=http://192.168.1.8:5678/webhook/whatsapp-inbound
+      - WHATSAPP_HOOK_EVENTS=message
+    volumes:
+      - ./sessions:/app/.sessions

@@ -1,0 +1,16 @@
+services:
+  syncthing:
+    image: syncthing/syncthing:latest
+    container_name: syncthing
+    hostname: remiichii-syncthing
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - STGUIADDRESS=0.0.0.0:8384
+    volumes:
+      - /opt/stacks/syncthing/config:/var/syncthing/config
+      - /mnt/data/Sync:/var/syncthing/Sync
+      - /mnt/data:/var/syncthing/data
+      - /mnt/nvme-data:/var/syncthing/nvme-data

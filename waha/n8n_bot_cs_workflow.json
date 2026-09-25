@@ -1,0 +1,91 @@
+{
+  "name": "Bot CS WhatsApp Demo",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-inbound",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        0
+      ],
+      "id": "webhook-trigger",
+      "name": "WA Message Inbound"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body || $json;\n\n// Format WAHA: body.event === 'message', body.payload.body, body.payload.from\nif (!body.payload || body.payload.fromMe) {\n  return [];\n}\n\nconst text = (body.payload.body || '').trim().toLowerCase();\nconst sender = body.payload.from;\nconst senderName = body.payload._data?.notifyName || 'Pelanggan';\n\nlet reply = '';\n\nif (text === '1' || text.includes('layanan') || text.includes('menu 1')) {\n  reply = `📋 *Layanan Kami:*\n1. Pendaftaran Rawat Inap & Jalan\\n2. Pemeriksaan Laboratorium\\n3. Farmasi 24 Jam\\n4. Medical Check Up\\n\\nKetik *menu* untuk kembali.`;\n} else if (text === '2' || text.includes('jadwal') || text.includes('menu 2')) {\n  reply = `⏰ *Jadwal Praktek Dokter:*\n- Poli Umum: 24 Jam\\n- Poli Spesialis: Senin - Sabtu (08.00 - 20.00)\\n- IGD: 24 Jam\\n\\nKetik *menu* untuk kembali.`;\n} else if (text === '3' || text.includes('cs') || text.includes('call center') || text.includes('admin') || text.includes('menu 3')) {\n  reply = `📞 *Call Center & Bantuan Petugas:*\nPetugas Customer Service kami siap melayani Anda.\\n\\nSilakan klik tautan berikut untuk terhubung langsung:\\n👉 https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20memerlukan%20bantuan%20CS\\n\\nAtau hubungi Hotline: *(021) 555-1914*`;\n} else {\n  reply = `Halo *${senderName}*! 👋\\nSelamat datang di Layanan Pelanggan RSU Catharina 1914.\\n\\nSilakan pilih menu dengan membalas angka/pesan berikut:\\n\\n*1.* Info Layanan Rumah Sakit\\n*2.* Jadwal Praktek & Poli\\n*3.* 📞 Hubungi Call Center / Petugas CS\\n\\nKetik angka *1*, *2*, atau *3* untuk memilih.`;\n}\n\nreturn [{\n  json: {\n    session: 'default',\n    chatId: sender,\n    text: reply\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        60,
+        0
+      ],
+      "id": "bot-logic-code",
+      "name": "Bot Menu Logic"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.1.8:3008/api/sendText",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Api-Key",
+              "value": "itskazor_waha_secret"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ session: $json.session, chatId: $json.chatId, text: $json.text }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        0
+      ],
+      "id": "send-reply-waha",
+      "name": "Send WhatsApp Message"
+    }
+  ],
+  "connections": {
+    "WA Message Inbound": {
+      "main": [
+        [
+          {
+            "node": "Bot Menu Logic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bot Menu Logic": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

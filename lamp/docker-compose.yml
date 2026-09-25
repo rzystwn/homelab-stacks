@@ -1,0 +1,44 @@
+services:
+  web:
+    build:
+      context: /opt/stacks/lamp
+      dockerfile: Dockerfile
+    image: custom-php:8.2-apache
+    container_name: lamp-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - /mnt/data/www:/var/www/html
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_RUN_GROUP=#1000
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:11.4
+    container_name: lamp-mariadb
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: itskazor
+      MYSQL_USER: kazor
+      MYSQL_PASSWORD: itskazor
+      MYSQL_DATABASE: default_db
+    volumes:
+      - /opt/stacks/lamp/db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: lamp-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 128M
+    depends_on:
+      - mariadb

@@ -1,0 +1,15 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    ports:
+      - "3005:3000"
+    volumes:
+      - /opt/stacks/homepage/config:/app/config
+      - /opt/stacks/homepage/icons:/app/public/icons:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - PUID=1000
+      - PGID=983
+      - HOMEPAGE_ALLOWED_HOSTS=remiichii:3005,remiichii,192.168.1.8:3005,192.168.1.8,100.83.110.71:3005,100.83.110.71,localhost:3005,localhost,127.0.0.1:3005,127.0.0.1

@@ -1,0 +1,23 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    user: 1000:1000
+    group_add:
+      - "44"
+      - "991"
+    ports:
+      - "8096:8096"
+    volumes:
+      - /opt/stacks/jellyfin/config:/config
+      - /opt/stacks/jellyfin/cache:/cache
+      - /opt/stacks/jellyfin/ui:/jellyfin/jellyfin-web/ui:ro
+      - /opt/stacks/jellyfin/index.html:/jellyfin/jellyfin-web/index.html:ro
+      - /mnt/data/Media:/media
+      - /mnt/data/Downloads:/downloads:ro
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - TZ=Asia/Jakarta
+      - JELLYFIN_PublishedServerUrl=http://192.168.1.8:8096

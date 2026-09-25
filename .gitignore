@@ -1,0 +1,43 @@
+# Secrets and environment files
+.env
+.env.*
+*.env
+*.key
+*.pem
+*.crt
+secrets/
+credentials/
+
+# Data directories and databases
+data/
+db_data/
+mysql/
+mariadb/
+postgres/
+sqlite/
+*.db
+*.sqlite
+*.sqlite3
+
+# Service persistent storage & caches
+**/data/
+**/config/
+**/logs/
+**/cache/
+**/media/
+**/uploads/
+**/storage/
+**/library/
+**/thumbs/
+**/encoded-video/
+**/profile/
+**/sessions/
+
+# Temporary and OS files
+.DS_Store
+*.log
+*.tmp
+*.bak
+**/letsencrypt/
+**/*-data/
+**/postgres-data/
