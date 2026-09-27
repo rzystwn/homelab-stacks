@@ -20,7 +20,7 @@ services:
       GLOBAL_3: "acl allow execute always = yes"
     volumes:
       - /mnt/data:/mount:rw
-      - /mnt/nvme-data:/mount_nvme:rw
+      - /home/kazor:/mount_nvme:rw
     ports:
       - "139:139"
       - "445:445"
