@@ -41,3 +41,6 @@ sqlite/
 **/letsencrypt/
 **/*-data/
 **/postgres-data/
+adguardhome/conf/
+downloader/aria2-config/
+homepage/config.backup.*

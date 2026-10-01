@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- PCB board -->
+  <rect x="14" y="4" width="36" height="56" rx="3" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+  
+  <!-- Notch on M.2 -->
+  <rect x="28" y="56" width="6" height="5" fill="#0f172a"/>
+  
+  <!-- Golden Pins at bottom -->
+  <rect x="17" y="56" width="2" height="4" fill="#fbbf24"/>
+  <rect x="21" y="56" width="2" height="4" fill="#fbbf24"/>
+  <rect x="25" y="56" width="2" height="4" fill="#fbbf24"/>
+  <rect x="36" y="56" width="2" height="4" fill="#fbbf24"/>
+  <rect x="40" y="56" width="2" height="4" fill="#fbbf24"/>
+  <rect x="44" y="56" width="2" height="4" fill="#fbbf24"/>
+  
+  <!-- Mounting semi-circle top -->
+  <circle cx="32" cy="4" r="3.5" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+  
+  <!-- NAND Flash Chips -->
+  <rect x="18" y="12" width="28" height="15" rx="1.5" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+  <text x="32" y="22" fill="#94a3b8" font-family="sans-serif" font-size="6" font-weight="bold" text-anchor="middle">NAND</text>
+  
+  <!-- Controller Chip -->
+  <rect x="20" y="32" width="24" height="13" rx="1.5" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+  <text x="32" y="41" fill="#38bdf8" font-family="sans-serif" font-size="6.5" font-weight="bold" text-anchor="middle">NVMe</text>
+
+  <!-- Small SMD components / capacitor indicators -->
+  <rect x="18" y="49" width="3" height="3" fill="#f59e0b" rx="0.5"/>
+  <rect x="23" y="49" width="3" height="3" fill="#f59e0b" rx="0.5"/>
+  <rect x="38" y="49" width="3" height="3" fill="#f59e0b" rx="0.5"/>
+  <rect x="43" y="49" width="3" height="3" fill="#f59e0b" rx="0.5"/>
+</svg>
