@@ -9,7 +9,7 @@ services:
       - portainer_data:/data
     ports:
       - 9443:9443
-      - 8000:8000
+      - 8002:8000
 
 volumes:
   portainer_data:
