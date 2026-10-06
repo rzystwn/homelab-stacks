@@ -13,4 +13,4 @@ services:
       - /opt/stacks/syncthing/config:/var/syncthing/config
       - /mnt/data/Sync:/var/syncthing/Sync
       - /mnt/data:/var/syncthing/data
-      - /mnt/nvme-data:/var/syncthing/nvme-data
+      - /home/kazor:/var/syncthing/home
